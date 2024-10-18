@@ -47,10 +47,46 @@ resource "aws_api_gateway_integration" "get_product_by_id_integration" {
   uri         = "arn:aws:apigateway:${var.region}:lambda:path/2015-03-31/functions/${var.get_product_lambda_arn}/invocations"
 }
 
+resource "aws_api_gateway_method" "delete_product_method" {
+  rest_api_id   = aws_api_gateway_rest_api.api.id
+  resource_id   = aws_api_gateway_resource.product_by_id_resource.id
+  http_method   = "DELETE"
+  authorization = "NONE"
+}
+
+resource "aws_api_gateway_integration" "delete_product_integration" {
+  rest_api_id = aws_api_gateway_rest_api.api.id
+  resource_id = aws_api_gateway_resource.product_by_id_resource.id
+  http_method = aws_api_gateway_method.delete_product_method.http_method
+  type        = "AWS_PROXY"
+  integration_http_method = "POST"
+  uri         = "arn:aws:apigateway:${var.region}:lambda:path/2015-03-31/functions/${var.delete_product_lambda_arn}/invocations"
+}
+
+resource "aws_api_gateway_method" "post_product_method" {
+  rest_api_id   = aws_api_gateway_rest_api.api.id
+  resource_id   = aws_api_gateway_resource.products_resource.id
+  http_method   = "POST"
+  authorization = "NONE"
+}
+
+resource "aws_api_gateway_integration" "post_product_integration" {
+  rest_api_id = aws_api_gateway_rest_api.api.id
+  resource_id = aws_api_gateway_resource.products_resource.id
+  http_method = aws_api_gateway_method.post_product_method.http_method
+  type        = "AWS_PROXY"
+  integration_http_method = "POST"
+  uri         = "arn:aws:apigateway:${var.region}:lambda:path/2015-03-31/functions/${var.post_product_lambda_arn}/invocations"
+}
+
+
+
 resource "aws_lambda_permission" "api_gateway_permission" {
   for_each = {
     "get_all_products" = var.list_products_lambda_arn
     "get_product_by_id" = var.get_product_lambda_arn
+    "post_product" = var.post_product_lambda_arn
+    "delete_product" = var.delete_product_lambda_arn
   }
   statement_id  = "AllowAPIGatewayInvoke-${each.key}"
   action        = "lambda:InvokeFunction"
@@ -62,7 +98,9 @@ resource "aws_lambda_permission" "api_gateway_permission" {
 resource "aws_api_gateway_deployment" "api_deployment" {
   depends_on = [
     aws_api_gateway_integration.get_all_products_integration,
-    aws_api_gateway_integration.get_product_by_id_integration
+    aws_api_gateway_integration.get_product_by_id_integration,
+    aws_api_gateway_integration.post_product_integration,
+    aws_api_gateway_integration.delete_product_integration
   ]
   rest_api_id = aws_api_gateway_rest_api.api.id
   stage_name  = var.stage_name

@@ -1,0 +1,2 @@
+J'ai une erreur 502 lorsque je fais un get sur l'api gateway
+pourtant la lambda fonctionne quand je l'appelle directement avec un test event dans AWS

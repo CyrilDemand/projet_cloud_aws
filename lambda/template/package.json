@@ -1,0 +1,9 @@
+{
+    "name": "get_product_lambda",
+    "version": "1.0.0",
+    "description": "Lambda to get product information from DynamoDB",
+    "main": "index.js",
+    "dependencies": {
+      "aws-sdk": "^2.814.0"
+    }
+  }

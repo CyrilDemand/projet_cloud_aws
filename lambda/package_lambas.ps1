@@ -2,8 +2,10 @@
 
 # Set the paths to the Lambda functions
 $lambdaPaths = @(
-    #"get_product",
-    "list_products"
+    "get_product",
+    "list_products",
+    "post_product"
+    "delete_product"
 )
 
 # Loop through each Lambda path and create a .zip file

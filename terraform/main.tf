@@ -39,3 +39,12 @@ module "list_products_lambda" {
   }
   role                 = module.iam.lambda_role_arn
 }
+
+module "products_api" {
+  source                   = "./modules/api_gateway"
+  api_name                 = "ProductsAPI"
+  list_products_lambda_arn = module.list_products_lambda.lambda_arn
+  get_product_lambda_arn   = module.get_product_lambda.lambda_arn
+  stage_name               = "dev"
+  region                   = "eu-west-3"
+}

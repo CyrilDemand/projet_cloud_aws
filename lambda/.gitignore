@@ -1,0 +1,8 @@
+# Ignore all node_modules directories
+**/node_modules/
+
+# Ignore all zip files
+**/*.zip
+
+# Ignore package-lock.json
+**/package-lock.json

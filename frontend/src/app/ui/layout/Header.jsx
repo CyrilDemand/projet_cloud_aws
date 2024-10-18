@@ -6,7 +6,7 @@ const Header = () => {
         <header className="fixed top-0 left-0 w-full z-50 bg-amber-400">
             <div className="container mx-auto flex justify-between items-center py-4">
                 {/* Logo */}
-                <Link href="/" className="text-3xl font-bold tracking-wider">
+                <Link href="/frontend/src/app/public" className="text-3xl font-bold tracking-wider">
                     Lamazon<span className="text-yellow-300">.</span>
                 </Link>
 

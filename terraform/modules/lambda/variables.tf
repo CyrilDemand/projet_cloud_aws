@@ -13,11 +13,6 @@ variable "runtime" {
   type        = string
 }
 
-variable "lambda_role_arn" {
-  description = "The IAM role for the Lambda function."
-  type        = string
-}
-
 variable "lambda_zip" {
   description = "The path to the Lambda function .zip file."
   type        = string
@@ -33,13 +28,7 @@ variable "environment" {
   type        = string
 }
 
-variable "api_gateway_arn" {
-  description = "The ARN of the API Gateway to trigger the Lambda."
-  type        = string
-  default     = null
-}
-
-variable "api_gateway_execution_arn" {
-  description = "The execution ARN of the API Gateway"
+variable "role" {
+  description = "The IAM role for the Lambda function."
   type        = string
 }

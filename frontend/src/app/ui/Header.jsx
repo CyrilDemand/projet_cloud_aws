@@ -1,7 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import Image from "next/image";
-import accountImage from "@/app/public/img/icon_account.png"
+
 const Header = () => {
     return (
         <header className="fixed top-0 left-0 w-full z-50 bg-amber-400">

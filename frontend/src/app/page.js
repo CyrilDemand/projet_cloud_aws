@@ -1,13 +1,16 @@
-import Image from "next/image";
-import Header from "@/app/ui/Header";
-import background from "@/app/public/img/background_header.jpg"
+'use client'
+
 import BackgroundHeader from "@/app/ui/BackgroundHeader";
+import AboutImageWithText from "@/app/ui/AboutImageWithText";
+import {useState} from "react";
 
 export default function Home() {
   return (
       <div>
-          <Header/>
           <BackgroundHeader/>
+          <section className={"pt-10"}>
+              <AboutImageWithText isHomePage={true}/>
+          </section>
       </div>
   );
 }

@@ -26,3 +26,16 @@ module "get_product_lambda" {
   }
   role                 = module.iam.lambda_role_arn 
 }
+
+module "list_products_lambda" {
+  source               = "./modules/lambda"
+  function_name        = "list_products_lambda"
+  handler              = "index.handler"
+  runtime              = "nodejs18.x"
+  lambda_zip           = "../lambda/list_products/lambda_function.zip"
+  environment          = "dev"
+  environment_variables = {
+    TABLE_NAME = module.dynamodb.table_name
+  }
+  role                 = module.iam.lambda_role_arn
+}

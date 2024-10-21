@@ -1,36 +1,42 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# How to run the project
 
-## Getting Started
+(all of the below command must be used in a cmd)
 
-First, run the development server:
+## if you don't use docker 
+you must install node and deno:
+- https://nodejs.org/en
+- https://deno.com
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+You must clone the project 
+``` bash
+git clone https://github.com/CyrilDemand/projet_cloud_aws
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Go to the frontend folder
+``` bash
+cd frontend
+```
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+download the dependencies using npm (Node Package Manager) which is installed with node
+``` bash
+npm i
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+``` bash
+deno run dev
+```
 
-## Learn More
+If everything went well you must be able to see the website : http://localhost:3000/
 
-To learn more about Next.js, take a look at the following resources:
+## if you have docker
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+``` bash
+ docker build -t lamazon .
+```
 
-## Deploy on Vercel
+``` bash
+docker run -d -p 3000:3000 lamazon
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+If everything went well you must be able to see the website : http://localhost:3000/

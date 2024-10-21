@@ -1,3 +1,7 @@
+provider "aws" {
+  region = "eu-west-3"
+}
+
 module "s3" {
   source = "./modules/s3"
   bucket_name = "product-images"
@@ -78,3 +82,13 @@ module "products_api" {
   stage_name               = "dev"
   region                   = "eu-west-3"
 }
+
+module "ec2" {
+  source = "./modules/ec2"
+}
+
+# TODO : CloudFront not working
+#module "cloudfront" {
+#  source = "./modules/cloudfront"
+#  ec2_instance_public_ip = module.ec2.instance_public_ip
+#}

@@ -1,19 +1,25 @@
 
-
+'use client'
 import React from 'react';
 import Image from "next/image";
 import { useDispatch } from 'react-redux';
-import { removeProductToBasket,addProductToBasket } from '@/features/basket/basketSlice';
-
+import { removeProductToBasket,addProductToBasket,ConfirmPurshase } from '@/features/basket/basketSlice';
+import { useRouter } from 'next/navigation'
 const Cart = ({ products }) => {
     const dispatch = useDispatch();
-
+    const router = useRouter();
     const handleRemoveFromBasket = (productId) => {
         dispatch(removeProductToBasket(productId));
     };
     const handleAddToBasket = (productId) => {
         dispatch(addProductToBasket(productId));
     };
+    const handlePurshase = (e) => {
+        e.preventDefault();
+        dispatch(ConfirmPurshase());
+        router.push('/confirmation'); 
+    };
+     
     return (
         <div className="p-6 max-w-lg mx-auto">
             {products.length > 0 ? (
@@ -60,9 +66,9 @@ const Cart = ({ products }) => {
                     <p className="text-xl font-semibold">
                         Total : ${products.reduce((total, item) => total + (item.product.price * item.quantity), 0).toFixed(2)}
                     </p>
-                    <button
+                    <button onClick={handlePurshase}
                         className="w-full bg-amber-400 text-white py-3 rounded-lg hover:bg-amber-500 transition mt-4">
-                        Confirmer l'achat
+                        Confirmer vos achats
                     </button>
                 </div>
             )}

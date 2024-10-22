@@ -32,3 +32,7 @@ variable "role" {
   description = "The IAM role for the Lambda function."
   type        = string
 }
+
+variable "api_gateway_arn" {
+  type = string
+}

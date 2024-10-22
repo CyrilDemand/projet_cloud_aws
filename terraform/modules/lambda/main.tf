@@ -16,3 +16,11 @@ resource "aws_lambda_function" "lambda_function" {
     Environment = var.environment
   }
 }
+
+resource "aws_lambda_permission" "sample" {
+  statement_id  = "AllowAPIGatewaySample"
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.lambda_function.arn
+  principal     = "apigateway.amazonaws.com"
+  source_arn    = "${var.api_gateway_arn}/*/*"
+}

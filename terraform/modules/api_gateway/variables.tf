@@ -1,8 +1,3 @@
-variable "api_name" {
-  description = "The name of the API Gateway"
-  type        = string
-}
-
 variable "list_products_lambda_arn" {
   description = "The ARN of the Lambda function to list all products"
   type        = string
@@ -31,4 +26,9 @@ variable "stage_name" {
 variable "region" {
   description = "The AWS region"
   type        = string
+}
+
+variable "api_id" {
+  description = "id of the API"
+  type = string
 }

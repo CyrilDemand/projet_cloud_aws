@@ -18,6 +18,17 @@ module "iam" {
   role_name = "lambda_role"
 }
 
+resource "aws_apigatewayv2_api" "api" {
+  name        = "ProductsAPI"
+  description = "API Gateway v2 for Lambda functions"
+  protocol_type = "HTTP"
+
+  cors_configuration {
+    allow_origins = ["*"]
+    allow_methods = ["GET", "POST", "DELETE"]
+  }
+}
+
 module "get_product_lambda" {
   source               = "./modules/lambda"
   function_name        = "get_product_lambda"
@@ -25,6 +36,7 @@ module "get_product_lambda" {
   runtime              = "nodejs18.x"
   lambda_zip           = "../lambda/get_product/lambda_function.zip"
   environment          = "dev"
+  api_gateway_arn = aws_apigatewayv2_api.api.execution_arn
   environment_variables = {
     TABLE_NAME = module.dynamodb.table_name
   }
@@ -38,6 +50,7 @@ module "list_products_lambda" {
   runtime              = "nodejs18.x"
   lambda_zip           = "../lambda/list_products/lambda_function.zip"
   environment          = "dev"
+  api_gateway_arn = aws_apigatewayv2_api.api.execution_arn
   environment_variables = {
     TABLE_NAME = module.dynamodb.table_name
   }
@@ -51,6 +64,7 @@ module "post_product_lambda" {
   runtime              = "nodejs18.x"
   lambda_zip           = "../lambda/post_product/lambda_function.zip"
   environment          = "dev"
+  api_gateway_arn = aws_apigatewayv2_api.api.execution_arn
   environment_variables = {
     TABLE_NAME = module.dynamodb.table_name
     BUCKET_NAME = module.s3.bucket_name
@@ -65,6 +79,7 @@ module "delete_product_lambda" {
   runtime              = "nodejs18.x"
   lambda_zip           = "../lambda/delete_product/lambda_function.zip"
   environment          = "dev"
+  api_gateway_arn = aws_apigatewayv2_api.api.execution_arn
   environment_variables = {
     TABLE_NAME = module.dynamodb.table_name
     BUCKET_NAME = module.s3.bucket_name
@@ -74,11 +89,11 @@ module "delete_product_lambda" {
 
 module "products_api" {
   source                   = "./modules/api_gateway"
-  api_name                 = "ProductsAPI"
   list_products_lambda_arn = module.list_products_lambda.lambda_arn
   get_product_lambda_arn   = module.get_product_lambda.lambda_arn
   post_product_lambda_arn  = module.post_product_lambda.lambda_arn
   delete_product_lambda_arn = module.delete_product_lambda.lambda_arn
+  api_id = aws_apigatewayv2_api.api.id
   stage_name               = "dev"
   region                   = "eu-west-3"
 }

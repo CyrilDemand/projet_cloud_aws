@@ -2,7 +2,6 @@
 
 import React, {useEffect} from 'react';
 import ProductCard from "@/app/ui/ProductCard";
-import getPeluches from "@/app/lib/peluches";
 import getProduct from "@/app/lib/peluches";
 import { useDispatch, useSelector } from 'react-redux';
 

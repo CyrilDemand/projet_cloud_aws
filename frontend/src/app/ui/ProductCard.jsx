@@ -11,7 +11,7 @@ const ProductCard = ({ product }) => {
 
     const handleAddToBasket = (e) => {
         e.preventDefault(); // Empêche le clic de rediriger vers la page de produit
-        dispatch(addProductToBasket(product.id)); // Ajoute l'ID du produit au panier
+        dispatch(addProductToBasket(product)); // Ajoute l'ID du produit au panier
     };
 
     return (

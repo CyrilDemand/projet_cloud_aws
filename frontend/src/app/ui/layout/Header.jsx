@@ -1,12 +1,16 @@
 import React from 'react';
 import Link from 'next/link';
+import {useDispatch, useSelector} from "react-redux";
 
 const Header = () => {
+
+    const dispatch = useDispatch();
+    const basketSize = useSelector((state) => state.basket.size);
     return (
         <header className="fixed top-0 left-0 w-full z-50 bg-amber-400">
             <div className="container mx-auto flex justify-between items-center py-4">
                 {/* Logo */}
-                <Link href="/frontend/src/app/public" className="text-3xl font-bold tracking-wider">
+                <Link href="/" className="text-3xl font-bold tracking-wider">
                     Lamazon<span className="text-yellow-300">.</span>
                 </Link>
 
@@ -35,6 +39,7 @@ const Header = () => {
                                 d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5H3m4 8a1 1 0 100 2 1 1 0 000-2zm10 0a1 1 0 100 2 1 1 0 000-2z"
                             />
                         </svg>
+                        <span className="text-sm text-gray-500">{basketSize}</span>
                         <span>Cart</span>
                     </Link>
                     <Link href="/account" className="flex items-center space-x-2">

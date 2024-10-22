@@ -1,11 +1,21 @@
+'use client';
+
 import React from 'react';
 import Link from 'next/link';
-import {useDispatch, useSelector} from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useRouter } from 'next/navigation';
+import { selectUserInfo } from '@/features/auth/userSlice'; // Import du sélecteur pour userInfo
 
 const Header = () => {
-
+    const router = useRouter();
     const dispatch = useDispatch();
+
+    // Récupérer les infos de l'utilisateur depuis le store Redux
+    const userInfo = useSelector(selectUserInfo);
+
+    // Récupérer la taille du panier depuis le store Redux
     const basketSize = useSelector((state) => state.basket.size);
+
     return (
         <header className="fixed top-0 left-0 w-full z-50 bg-amber-400">
             <div className="container mx-auto flex justify-between items-center py-4">
@@ -22,7 +32,7 @@ const Header = () => {
                     <Link href="/contact" className="hover:text-yellow-300 transition">Contact</Link>
                 </nav>
 
-                {/* Cart */}
+                {/* Cart & Account */}
                 <div className="flex flex-wrap space-x-6 justify-between">
                     <Link href="/basket" className="flex items-center space-x-2">
                         <svg
@@ -57,7 +67,7 @@ const Header = () => {
                                 d="M5.121 17.804A9 9 0 1112 21a9 9 0 01-6.879-3.196zM15 11a3 3 0 11-6 0 3 3 0 016 0z"
                             />
                         </svg>
-                        <span>Account</span>
+                        <span>{userInfo ? `${userInfo.family_name} ${userInfo.given_name}` : "Account" }</span>
                     </Link>
                 </div>
 

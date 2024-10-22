@@ -32,10 +32,21 @@ export const basketSlice = createSlice({
                 state.size -= 1;
             }
         },
+        ConfirmPurshase: (state, action) => {
+            // Store a summary of the purchase before clearing the cart
+            state.purchaseSummary = {
+                products: state.value,
+                total: state.value.reduce((total, item) => total + (item.product.price * item.quantity), 0)
+            };
+
+            // Clear the cart
+            state.value = [];
+            state.size = 0;
+        },
     },
 });
 
 export const { addProductToBasket } = basketSlice.actions;
 export const { removeProductToBasket } = basketSlice.actions;
-
+export const { ConfirmPurshase } = basketSlice.actions;
 export default basketSlice.reducer;

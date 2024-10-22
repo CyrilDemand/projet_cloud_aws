@@ -1,7 +1,7 @@
-output "instance_ids" {
-  value = aws_instance.nextjs_instance[*].id
+output "security_group_id" {
+  value = aws_security_group.allow_http.id
 }
 
-output "instance_public_ips" {
-  value = aws_instance.nextjs_instance[*].public_ip
+output "ec2_instances" {
+  value = aws_instance.nextjs_instance[*]
 }

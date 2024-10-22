@@ -1,0 +1,249 @@
+
+# 1. Créer le VPC
+resource "aws_vpc" "ecomm-vpc" {
+  cidr_block = "10.0.0.0/16"
+
+  tags = {
+    Name = "my-vpc"
+  }
+}
+
+# 2. Créer le sous-réseau public
+resource "aws_subnet" "public_subnet" {
+  vpc_id            = aws_vpc.ecomm-vpc.id
+  cidr_block        = "10.0.1.0/24"
+  availability_zone = "eu-west-3a"
+  map_public_ip_on_launch = true  # Associer automatiquement des IP publiques aux instances dans ce sous-réseau
+
+
+
+  tags = {
+    Name = "public_subnet"
+  }
+}
+
+resource "aws_subnet" "public_subnet_2" {
+  vpc_id            = aws_vpc.ecomm-vpc.id
+  cidr_block        = "10.0.3.0/24"
+  availability_zone = "eu-west-3b"
+  map_public_ip_on_launch = true
+
+  tags = {
+    Name = "public_subnet_2"
+  }
+}
+
+resource "aws_subnet" "private_subnet" {
+  vpc_id            = aws_vpc.ecomm-vpc.id
+  cidr_block        = "10.0.2.0/24"
+  availability_zone = "eu-west-3b"
+
+  tags = {
+    Name = "private_subnet"
+  }
+}
+
+# 3. Créer l'Internet Gateway
+resource "aws_internet_gateway" "ecomm_gateway" {
+  vpc_id = aws_vpc.ecomm-vpc.id
+
+  tags = {
+    Name = "ecomm-gateway"
+  }
+}
+# 4. Créer la table de routage
+resource "aws_route_table" "public_ecomm_route_table" {
+  vpc_id = aws_vpc.ecomm-vpc.id
+
+  tags = {
+    Name = "ecomm-route-table"
+  }
+}
+
+# 5. Ajouter une route vers l'Internet Gateway dans la table de routage
+resource "aws_route" "internet_access" {
+  route_table_id         = aws_route_table.public_ecomm_route_table.id
+  destination_cidr_block = "0.0.0.0/0"
+  gateway_id             = aws_internet_gateway.ecomm_gateway.id
+}
+
+# 6. Associer la table de routage au sous-réseau public
+resource "aws_route_table_association" "public_association" {
+  subnet_id      = aws_subnet.public_subnet.id
+  route_table_id = aws_route_table.public_ecomm_route_table.id
+}
+
+
+# 6. Associer la table de routage au sous-réseau public
+resource "aws_route_table_association" "public_association_2" {
+  subnet_id      = aws_subnet.public_subnet_2.id
+  route_table_id = aws_route_table.public_ecomm_route_table.id
+}
+
+
+# Créer un groupe de sécurité qui autorise le trafic HTTP
+resource "aws_security_group" "allow_http" {
+  name        = "allow_http"
+  description = "Allow HTTP inbound traffic"
+
+  ingress {
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "allow_http"
+  }
+  vpc_id = aws_vpc.ecomm-vpc.id
+
+}
+
+resource "aws_instance" "ecommerce-ec2-test-tf" {
+  ami           = "ami-04a790ca5ad2f097c"  # Amazon Linux 2 ou Ubuntu AMI
+  instance_type = "t2.micro"
+  subnet_id     = aws_subnet.public_subnet.id
+  #associate_public_ip_address = true
+  # Groupe de sécurité pour autoriser HTTP (port 80)
+  vpc_security_group_ids = [aws_security_group.allow_http.id]
+
+  # User data pour installer Nginx à la création de l'instance
+  user_data = <<-EOF
+              #!/bin/bash
+              sudo amazon-linux-extras update -y
+              sudo amazon-linux-extras install nginx1 -y
+              echo "<html><body><h1>Instance 1: EC2 Ecommerce</h1></body></html>" > /usr/share/nginx/html/index.html
+              sudo systemctl start nginx
+              sudo systemctl enable nginx
+              sudo reboot
+              EOF
+
+
+  tags = {
+    Name = "Ecommerce-EC2-test-tf"
+  }
+}
+
+resource "aws_instance" "replicate-ecommerce-ec2-test-tf" {
+  ami           = "ami-04a790ca5ad2f097c"  # Amazon Linux 2 ou Ubuntu AMI
+  instance_type = "t2.micro"
+  subnet_id     = aws_subnet.public_subnet.id
+  #associate_public_ip_address = true
+  # Groupe de sécurité pour autoriser HTTP (port 80)
+  vpc_security_group_ids = [aws_security_group.allow_http.id]
+
+  # User data pour installer Nginx à la création de l'instance
+  user_data = <<-EOF
+              #!/bin/bash
+              sudo amazon-linux-extras update -y
+              sudo amazon-linux-extras install nginx1 -y
+              echo "<html><body><h1>Instance 2: Replicate EC2</h1></body></html>" > /usr/share/nginx/html/index.html
+              sudo systemctl start nginx
+              sudo systemctl enable nginx
+              sudo reboot
+              EOF
+  
+
+  tags = {
+    Name = "Replicate-Ecommerce-EC2-test-tf"
+  }
+}
+
+
+
+# Groupe cible pour les instances EC2
+resource "aws_lb_target_group" "ecommerce_tg" {
+  name     = "ecommerce-target-group"
+  port     = 80
+  protocol = "HTTP"
+  vpc_id   = aws_vpc.ecomm-vpc.id
+
+  health_check {
+    healthy_threshold   = 2
+    unhealthy_threshold = 2
+    timeout             = 5
+    interval            = 30
+    path                = "/"
+    matcher             = "200"
+  }
+
+  tags = {
+    Name = "Ecommerce-TG"
+  }
+}
+
+# Load Balancer
+resource "aws_lb" "ecommerce_lb" {
+  name               = "ecommerce-alb"
+  internal           = false  # Pour un ALB externe
+  load_balancer_type = "application"
+  security_groups    = [aws_security_group.allow_http.id]
+  subnets            = [
+   aws_subnet.public_subnet.id,  # Sous-réseau public 1
+   aws_subnet.public_subnet_2.id  # Sous-réseau public 2
+  ]
+  tags = {
+    Name = "Ecommerce-ALB"
+  }
+}
+
+
+
+# Listener pour l'ALB (port 80)
+resource "aws_lb_listener" "http_listener" {
+  load_balancer_arn = aws_lb.ecommerce_lb.arn
+  port              = 80
+  protocol          = "HTTP"
+
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.ecommerce_tg.arn
+  }
+}
+
+# Associer les instances EC2 au groupe cible
+resource "aws_lb_target_group_attachment" "ecommerce_ec2_attachment" {
+  target_group_arn = aws_lb_target_group.ecommerce_tg.arn
+  target_id        = aws_instance.ecommerce-ec2-test-tf.id
+  port             = 80
+}
+
+resource "aws_lb_target_group_attachment" "replicate_ec2_attachment" {
+  target_group_arn = aws_lb_target_group.ecommerce_tg.arn
+  target_id        = aws_instance.replicate-ecommerce-ec2-test-tf.id
+  port             = 80
+}
+
+
+# 3. Créer un groupe de sécurité pour le SSH
+resource "aws_security_group" "allow_ssh" {
+  name        = "allow_ssh"
+  description = "Allow SSH inbound traffic"
+  vpc_id      = aws_vpc.ecomm-vpc.id
+
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]  # Remplacez par votre adresse IP publique
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "allow_ssh"
+  }
+}

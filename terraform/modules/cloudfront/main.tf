@@ -1,13 +1,13 @@
 resource "aws_cloudfront_distribution" "nextjs_distribution" {
   origin {
-    domain_name = var.ec2_instance_public_ip
+    domain_name = var.elb_dns_name  # This should be the DNS name of your ALB
     origin_id   = "nextjs-origin"
 
     custom_origin_config {
       http_port              = 80
       https_port             = 443
       origin_protocol_policy = "http-only"
-      origin_ssl_protocols   = ["TLSv1.2"]  # Add this line
+      origin_ssl_protocols   = ["TLSv1.2"]
     }
   }
 
@@ -38,7 +38,7 @@ resource "aws_cloudfront_distribution" "nextjs_distribution" {
   }
 
   viewer_certificate {
-    cloudfront_default_certificate = true  # Add this block
+    cloudfront_default_certificate = true
   }
 
   price_class = "PriceClass_100"

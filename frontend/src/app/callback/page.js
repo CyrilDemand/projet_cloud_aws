@@ -2,9 +2,12 @@
 
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { useDispatch } from 'react-redux';
+import {setUserInfo} from "@/features/auth/userSlice";
 
 export default function Callback() {
     const router = useRouter();
+    const dispatch = useDispatch();
 
     useEffect(() => {
         const urlParams = new URLSearchParams(window.location.search);
@@ -44,7 +47,7 @@ export default function Callback() {
                         // Décoder le token JWT pour récupérer les informations utilisateur
                         const userInfo = JSON.parse(atob(data.id_token.split('.')[1]));
                         sessionStorage.setItem('userInfo', JSON.stringify(userInfo));
-
+                        dispatch(setUserInfo(userInfo));
                         // Redirige l'utilisateur vers la page d'accueil après la connexion réussie
                         router.push('/');
                     } else {

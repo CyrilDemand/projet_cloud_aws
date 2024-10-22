@@ -24,9 +24,11 @@ export default function getProduct(){
 
 import axios from "axios"
 
-export default function getProduct(){
-    const productsUrl = "https://9hzyyu9lwj.execute-api.eu-west-3.amazonaws.com/dev/products";
-    const response = axios.get(productsUrl);
+export default async function getProduct(){
+    const productsUrl = "https://ahed3c7k11.execute-api.eu-west-3.amazonaws.com/dev/list_products_lambda";
+    const response = await axios.get(productsUrl);
     const data = response.data;
+    console.log(data);
+    console.log(Array.isArray(data));
     return data;
 }

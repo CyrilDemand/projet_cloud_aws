@@ -11,7 +11,11 @@ const Home = () => {
     const basket = useSelector((state) => state.basket.value);
 
     useEffect(() => {
-        setProducts(getProduct());
+        const fetchProducts = async () => {
+            const products = await getProduct();
+            setProducts(products);
+        };
+        fetchProducts();
     }, []);
     return (
         <div className="container mx-auto py-12">

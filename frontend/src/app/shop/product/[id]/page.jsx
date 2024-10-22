@@ -9,9 +9,13 @@ export default function Home({ params }) {
     const [product, setProduct] = useState({});
 
     useEffect(() => {
-        const fetchedProduct = getProduct().filter(p => p.id == params.id);
-        console.log(fetchedProduct);
-        setProduct(fetchedProduct[0]);
+        const fetchProducts = async () => {
+            const products = await getProduct();
+            const fetchedProduct = getProduct().filter(p => p.id == params.id);
+            console.log(fetchedProduct);
+            setProduct(fetchedProduct[0]);
+        };
+        fetchProducts();
     }, [params.id]);
 
     return (

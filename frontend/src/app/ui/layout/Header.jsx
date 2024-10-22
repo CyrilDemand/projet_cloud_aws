@@ -24,7 +24,7 @@ const Header = () => {
 
                 {/* Cart */}
                 <div className="flex flex-wrap space-x-6 justify-between">
-                    <Link href="/cart" className="flex items-center space-x-2">
+                    <Link href="/basket" className="flex items-center space-x-2">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             fill="none"

@@ -83,6 +83,10 @@ module "products_api" {
   region                   = "eu-west-3"
 }
 
+module "cognito" {
+  source = "./modules/cognito"
+}
+
 #module "vpc" {
 #  source = "./modules/vpc"
 #}

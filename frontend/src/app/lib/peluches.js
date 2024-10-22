@@ -1,4 +1,4 @@
-import peluches from "@/app/public/img/peluche.jpg"
+/*import peluches from "@/app/public/img/peluche.jpg"
 
 export default function getProduct(){
     return [
@@ -20,4 +20,13 @@ export default function getProduct(){
             ],
         }
     ]
+}*/
+
+import axios from "axios"
+
+export default function getProduct(){
+    const productsUrl = "https://9hzyyu9lwj.execute-api.eu-west-3.amazonaws.com/dev/products";
+    const response = axios.get(productsUrl);
+    const data = response.data;
+    return data;
 }

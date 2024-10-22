@@ -1,9 +1,11 @@
 resource "aws_instance" "nextjs_instance" {
+  count         = 2
   ami           = "ami-00d81861317c2cc1f"
-  instance_type = "t2.micro" 
+  instance_type = "t2.micro"
+  subnet_id     = aws_subnet.subnet.id
 
   tags = {
-    Name = "NextJS-EC2"
+    Name = "NextJS-EC2-${count.index}"
   }
 
   user_data = <<-EOF

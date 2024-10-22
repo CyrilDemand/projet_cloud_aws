@@ -7,6 +7,9 @@ terraform destroy
 
 un module terraform par service aws (api gateway, ec2, lambda, iam, s3 et cloudfront qui ne marche pas pour l'instant)
 
-TODO : faire fonctionner cloudfront
+TODO : faire fonctionner cloudfront, vpc, elb et les deux ec2 (commentés pour l'instant)
 
-TODO elb n'est a priori pas payant, à voir pour mettre 2 ec2 liées par elb
+
+url cognito : 
+https://lmzn-domain.auth.eu-west-3.amazoncognito.com/login?response_type=code&client_id=<CLIENT_ID>&redirect_uri=http://localhost:3000/callback
+client id trouvable dans Cognito > user pool > app integration

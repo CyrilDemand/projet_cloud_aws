@@ -83,9 +83,19 @@ module "products_api" {
   region                   = "eu-west-3"
 }
 
-module "ec2" {
-  source = "./modules/ec2"
-}
+#module "vpc" {
+#  source = "./modules/vpc"
+#}
+
+# module "ec2" {
+#  source = "./modules/ec2"
+#  subnet_id = module.vpc.subnet_id
+#}
+
+# module "elb" {
+#  source = "./modules/elb"
+#  instance_ids = module.ec2.instance_ids
+#}
 
 # TODO : CloudFront not working
 #module "cloudfront" {

@@ -102,26 +102,26 @@ module "cognito" {
   source = "./modules/cognito"
 }
 
-module "vpc" {
-  source = "./modules/vpc"
-}
+//module "vpc" {
+//  source = "./modules/vpc"
+//}
 
-module "ec2" {
-  source = "./modules/ec2"
-  vpc_id = module.vpc.vpc_id
-  subnet_id = module.vpc.public_subnet_a_id
-}
+//module "ec2" {
+//  source = "./modules/ec2"
+//  vpc_id = module.vpc.vpc_id
+//  subnet_id = module.vpc.public_subnet_a_id
+//}
 
-module "elb" {
-  source = "./modules/elb"
-  vpc_id = module.vpc.vpc_id
-  security_group_id = module.ec2.security_group_id
-  ec2_instances = module.ec2.ec2_instances
-  public_subnet_a_id = module.vpc.public_subnet_a_id
-  public_subnet_b_id = module.vpc.public_subnet_b_id
-}
+//module "elb" {
+//  source = "./modules/elb"
+//  vpc_id = module.vpc.vpc_id
+//  security_group_id = module.ec2.security_group_id
+// ec2_instances = module.ec2.ec2_instances
+//  public_subnet_a_id = module.vpc.public_subnet_a_id
+//  public_subnet_b_id = module.vpc.public_subnet_b_id
+//}
 
-module "cloudfront" {
-  source = "./modules/cloudfront"
-  elb_dns_name = module.elb.elb_dns_name
-}
+//module "cloudfront" {
+//  source = "./modules/cloudfront"
+//  elb_dns_name = module.elb.elb_dns_name
+//}

@@ -15,9 +15,9 @@ export default function Callback() {
 
         if (code) {
             const redirectUri = 'http://localhost:3000/callback'; // URL de redirection après connexion (callback)
-            const clientId = '5s9uguc9l4ao3ar3a70g6tduep'; // Remplace par ton Client ID Cognito
+            const clientId = '51lrvhdmhflesb2534jrlausr1'; // Remplace par ton Client ID Cognito
             const cognitoDomain = 'lmzn-domain.auth.eu-west-3.amazoncognito.com'; // Domaine Cognito configuré dans la console AWS
-            const clientSecret = 'p37s5bi0vg2ga1vb2n0tkt4hoas9f0hgb1amocr3mbi3077sve3'; // Si tu utilises un secret (sinon, tu peux omettre cela)
+            const clientSecret = '1knise7c5cq29ouhan0afleecq6p0muuqkbcph0oua46enphamke'; // Si tu utilises un secret (sinon, tu peux omettre cela)
 
             // URL pour échanger le code contre des tokens
             const tokenUrl = `https://${cognitoDomain}/oauth2/token`;

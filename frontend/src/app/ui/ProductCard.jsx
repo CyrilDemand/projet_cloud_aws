@@ -19,7 +19,7 @@ const ProductCard = ({ product }) => {
             <div className="border rounded-lg shadow-lg p-6 max-w-lg mx-auto">
                 <div className="relative w-full h-64 mb-4">
                     <Image
-                        src={product.img}
+                        src={product.UrlImage}
                         alt={product.name}
                         layout="fill"
                         objectFit="contain"

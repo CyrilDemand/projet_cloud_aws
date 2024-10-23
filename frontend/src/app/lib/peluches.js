@@ -25,7 +25,7 @@ export default function getProduct(){
 import axios from "axios"
 
 export default async function getProduct(){
-    const productsUrl = "https://ahed3c7k11.execute-api.eu-west-3.amazonaws.com/dev/list_products_lambda";
+    const productsUrl = "https://h6yaiwvzr4.execute-api.eu-west-3.amazonaws.com/dev/products";
     const response = await axios.get(productsUrl);
     const data = response.data;
     console.log(data);

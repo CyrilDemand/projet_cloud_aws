@@ -1,3 +1,5 @@
+Notre groupe : Noé DELCROIX, Habiba CHOUCHANE, Cyril DEMAND
+
 # How to run the project
 
 (all of the below command must be used in a cmd)
@@ -23,7 +25,7 @@ npm i
 ```
 
 ``` bash
-deno run dev
+npm run dev
 ```
 
 If everything went well you must be able to see the website : http://localhost:3000/

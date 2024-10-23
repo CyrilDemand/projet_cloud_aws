@@ -5,11 +5,13 @@ import { useRouter } from 'next/navigation';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUserInfo, clearUserInfo, selectUserInfo } from '@/features/auth/userSlice';
 import Login from "@/app/ui/Login";
+import {selectAccountBalance} from "@/features/basket/accountBalanceSlice";
 
 const Home = () => {
     const dispatch = useDispatch();
     const userInfo = useSelector(selectUserInfo);  // Sélectionne les infos de l'utilisateur depuis le store Redux
     const router = useRouter();
+    const accountBalance = useSelector(selectAccountBalance)
 
     useEffect(() => {
         // Récupérer les infos de l'utilisateur depuis sessionStorage
@@ -28,7 +30,7 @@ const Home = () => {
         return (
             <div className="container mx-auto py-12">
                 <h1 className="text-2xl font-bold mb-4">Bienvenue, {userInfo.name || userInfo.email}</h1>
-                <p className="text-lg mb-4">Votre solde est de : {userInfo.account_balance || 0} €</p>
+                <p className="text-lg mb-4">Votre solde est de : {accountBalance || 0} €</p>
 
                 {/* Ajoute d'autres informations utilisateur ici */}
                 <p>Email : {userInfo.email}</p>

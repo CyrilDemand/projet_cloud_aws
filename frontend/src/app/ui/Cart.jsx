@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useDispatch } from 'react-redux';
 import { removeProductToBasket,addProductToBasket,ConfirmPurshase } from '@/features/basket/basketSlice';
 import { useRouter } from 'next/navigation'
+import {ConfirmPurshaseAccountBalance} from "@/features/basket/accountBalanceSlice";
 const Cart = ({ products }) => {
     const dispatch = useDispatch();
     const router = useRouter();
@@ -17,6 +18,7 @@ const Cart = ({ products }) => {
     const handlePurshase = (e) => {
         e.preventDefault();
         dispatch(ConfirmPurshase());
+        dispatch(ConfirmPurshaseAccountBalance(products.reduce((total, item) => total + (item.product.price * item.quantity), 0).toFixed(2)))
         router.push('/confirmation'); 
     };
      
@@ -27,7 +29,7 @@ const Cart = ({ products }) => {
                     <div key={item.product.id} className="border-b py-4 flex items-center">
                         <div className="relative w-20 h-20 mr-4">
                             <Image
-                                src={item.product.img}
+                                src={item.product.UrlImage}
                                 alt={item.product.name}
                                 layout="fill"
                                 objectFit="contain"

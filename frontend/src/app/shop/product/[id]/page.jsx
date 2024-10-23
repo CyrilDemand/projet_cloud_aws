@@ -11,7 +11,7 @@ export default function Home({ params }) {
     useEffect(() => {
         const fetchProducts = async () => {
             const products = await getProduct();
-            const fetchedProduct = getProduct().filter(p => p.id == params.id);
+            const fetchedProduct = products.filter(p => p.id == params.id);
             console.log(fetchedProduct);
             setProduct(fetchedProduct[0]);
         };

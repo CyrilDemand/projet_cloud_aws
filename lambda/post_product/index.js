@@ -1,23 +1,9 @@
 const AWS = require('aws-sdk');
-const s3 = new AWS.S3();
 const dynamoDb = new AWS.DynamoDB.DocumentClient();
 
 exports.handler = async (event) => {
   try {
-    const { id, name, desc, price, image } = JSON.parse(event.body);
-    const imageKey = image ? `${id}.jpg` : null; // Assuming the image is a JPEG
-
-    if (image) {
-      // Upload image to S3
-      const s3Params = {
-        Bucket: process.env.BUCKET_NAME,
-        Key: imageKey,
-        Body: Buffer.from(image, 'base64'),
-        ContentType: 'image/jpeg'
-      };
-
-      await s3.putObject(s3Params).promise();
-    }
+    const { id, name, desc, price, imageUrl } = JSON.parse(event.body);
 
     // Update DynamoDB with product details
     const dynamoParams = {
@@ -27,7 +13,7 @@ exports.handler = async (event) => {
         name,
         desc,
         price,
-        UrlImage: image ? `https://${process.env.BUCKET_NAME}.s3.amazonaws.com/${imageKey}` : null
+        UrlImage: imageUrl || null // Use the provided image URL
       }
     };
 
@@ -44,4 +30,4 @@ exports.handler = async (event) => {
       body: JSON.stringify({ error: 'Could not add product', details: error.message })
     };
   }
-};
+}

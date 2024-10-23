@@ -1,0 +1,87 @@
+[
+    {
+      "id": "1",
+      "name": "lama faché",
+      "desc": "Le lama faché est idéal pour les collectionneurs et les amateurs de curiosités uniques.",
+      "price": 144.45,
+      "imageUrl": "https://lamazon-product-images.s3.eu-west-3.amazonaws.com/1.png"
+    },
+    {
+      "id": "2",
+      "name": "lama traque",
+      "desc": "Le lama traque est idéal pour les collectionneurs et les amateurs de curiosités uniques.",
+      "price": 146.88,
+      "imageUrl": "https://lamazon-product-images.s3.eu-west-3.amazonaws.com/2.png"
+    },
+    {
+      "id": "3",
+      "name": "lama choire",
+      "desc": "Le lama choire est idéal pour les collectionneurs et les amateurs de curiosités uniques.",
+      "price": 182.86,
+      "imageUrl": "https://lamazon-product-images.s3.eu-west-3.amazonaws.com/3.png"
+    },
+    {
+      "id": "4",
+      "name": "lama sticot",
+      "desc": "Le lama sticot est idéal pour les collectionneurs et les amateurs de curiosités uniques.",
+      "price": 52.80,
+      "imageUrl": "https://lamazon-product-images.s3.eu-west-3.amazonaws.com/4.png"
+    },
+    {
+      "id": "5",
+      "name": "lama rgourlette",
+      "desc": "Le lama rgourlette est idéal pour les collectionneurs et les amateurs de curiosités uniques.",
+      "price": 42.21,
+      "imageUrl": "https://lamazon-product-images.s3.eu-west-3.amazonaws.com/5.png"
+    },
+    {
+      "id": "6",
+      "name": "lama niaque",
+      "desc": "Le lama niaque est idéal pour les collectionneurs et les amateurs de curiosités uniques.",
+      "price": 112.34,
+      "imageUrl": "https://lamazon-product-images.s3.eu-west-3.amazonaws.com/6.png"
+    },
+    {
+      "id": "7",
+      "name": "bernard lama",
+      "desc": "Le bernard lama est idéal pour les collectionneurs et les amateurs de curiosités uniques.",
+      "price": 87.18,
+      "imageUrl": "https://lamazon-product-images.s3.eu-west-3.amazonaws.com/7.png"
+    },
+    {
+      "id": "8",
+      "name": "lama madou",
+      "desc": "Le lama madou est idéal pour les collectionneurs et les amateurs de curiosités uniques.",
+      "price": 79.49,
+      "imageUrl": "https://lamazon-product-images.s3.eu-west-3.amazonaws.com/8.png"
+    },
+    {
+      "id": "9",
+      "name": "lama rtine",
+      "desc": "Le lama rtine est idéal pour les collectionneurs et les amateurs de curiosités uniques.",
+      "price": 146.00,
+      "imageUrl": "https://lamazon-product-images.s3.eu-west-3.amazonaws.com/9.png"
+    },
+    {
+      "id": "10",
+      "name": "lama ssue",
+      "desc": "Le lama ssue est idéal pour les collectionneurs et les amateurs de curiosités uniques.",
+      "price": 76.76,
+      "imageUrl": "https://lamazon-product-images.s3.eu-west-3.amazonaws.com/10.png"
+    },
+    {
+      "id": "11",
+      "name": "lama retto",
+      "desc": "Le lama retto est idéal pour les collectionneurs et les amateurs de curiosités uniques.",
+      "price": 113.22,
+      "imageUrl": "https://lamazon-product-images.s3.eu-west-3.amazonaws.com/11.png"
+    },
+    {
+      "id": "12",
+      "name": "lama stication",
+      "desc": "Le lama stication est idéal pour les collectionneurs et les amateurs de curiosités uniques.",
+      "price": 149.39,
+      "imageUrl": "https://lamazon-product-images.s3.eu-west-3.amazonaws.com/12.png"
+    }
+  ]
+  
